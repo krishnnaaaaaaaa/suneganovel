@@ -21,11 +21,11 @@ export default function UserProfile({ isPublicView = false }: UserProfileProps) 
     username: "anya_writes",
     bio: "Passionate storyteller weaving tales of magic and mystery. Lover of coffee, cats, and compelling narratives.",
     avatarUrl: "/placeholder.svg?height=150&width=150",
-    followers: 1234,
-    following: 567,
+    followers: 0,
+    following: 0,
     storiesAuthored: 25,
-    storiesRead: 150,
-    totalWordsWritten: "1.2M",
+    storiesRead: 10,
+    totalWordsWritten: "10",
   })
   const [isEditingProfile, setIsEditingProfile] = useState(false)
   const [editedName, setEditedName] = useState(user.name)
