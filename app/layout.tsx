@@ -24,7 +24,6 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Sunega Novel",
   description: "A next-generation storytelling and reading platform.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
