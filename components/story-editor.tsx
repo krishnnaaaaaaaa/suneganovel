@@ -14,10 +14,21 @@ import { FloatingLabelTextarea } from "@/components/ui/floating-label-textarea"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import StoryPreviewModal from "./story-preview-modal" // Import the new preview modal
 
-export default function StoryEditor() {
-  const [title, setTitle] = useState("")
+interface StoryEditorProps {
+  onClose: () => void;
+  story?: {
+    title: string;
+    content: string;
+    status?: string;
+    // Add other story properties as needed
+  } | null;
+  onSave?: (storyData: any) => void;
+}
+
+export default function StoryEditor({ onClose, story: initialStory, onSave }: StoryEditorProps) {
+  const [title, setTitle] = useState(initialStory?.title || "")
   const [episodeNumber, setEpisodeNumber] = useState("")
-  const [content, setContent] = useState("")
+  const [content, setContent] = useState(initialStory?.content || "")
   const [genre, setGenre] = useState("")
   const [tags, setTags] = useState("")
   const [coverImage, setCoverImage] = useState<File | null>(null)
@@ -49,56 +60,45 @@ export default function StoryEditor() {
     }
   }
 
-  const handleSaveDraft = () => {
-    setIsSaving(true)
-    setAutoSaveStatus("Saving...")
+  const handleSave = (publish = false) => {
+    setIsSaving(publish)
+    setIsPublishing(publish)
+    
+    const storyData = {
+      title,
+      content,
+      status: publish ? 'published' : 'draft',
+      // Add other fields as needed
+    };
+    
+    // If onSave callback is provided, use it
+    if (onSave) {
+      onSave(storyData);
+      onClose();
+      return;
+    }
+    
+    // Otherwise, use the default save behavior
     setTimeout(() => {
-      console.log("Draft saved:", {
-        title,
-        episodeNumber,
-        contentType,
-        content: contentType === "text" ? content : "Image content (files not logged)",
-        storyImages: contentType === "image" ? storyImages.map((f) => f.name) : [],
-        genre,
-        tags,
-        coverImage: coverImage?.name,
-      })
+      setAutoSaveStatus(publish ? "Published" : "Saved")
       setIsSaving(false)
-      setAutoSaveStatus("Saved")
+      setIsPublishing(false)
+      
       toast({
-        title: "Draft Saved!",
-        description: "Your story draft has been successfully saved.",
+        title: publish ? "Story published!" : "Draft saved",
+        description: publish ? "Your story has been published successfully." : "Your changes have been saved.",
       })
+      
+      if (publish) {
+        onClose()
+      }
     }, 1500)
   }
 
-  const handlePublish = () => {
-    setIsPublishing(true)
-    setTimeout(() => {
-      console.log("Story published:", {
-        title,
-        episodeNumber,
-        contentType,
-        content: contentType === "text" ? content : "Image content (files not logged)",
-        storyImages: contentType === "image" ? storyImages.map((f) => f.name) : [],
-        genre,
-        tags,
-        coverImage: coverImage?.name,
-      })
-      setIsPublishing(false)
-      toast({
-        title: "Story Published!",
-        description: "Your masterpiece is now live for the world to read!",
-      })
-      setTitle("")
-      setEpisodeNumber("")
-      setContent("")
-      setGenre("")
-      setTags("")
-      setCoverImage(null)
-      setStoryImages([])
-      setContentType("text")
-    }, 2000)
+  const handlePublish = () => handleSave(true);
+
+  const handleSaveDraft = () => {
+    handleSave(false);
   }
 
   const handlePreview = () => {
@@ -325,22 +325,8 @@ export default function StoryEditor() {
               {isSaving ? "Saving..." : "Save Draft"}
             </Button>
             <Button
-              onClick={handlePreview}
-              disabled={
-                isSaving ||
-                isPublishing ||
-                !title ||
-                (contentType === "text" && !content) ||
-                (contentType === "image" && storyImages.length === 0)
-              }
-              className="flex-1 rounded-lg bg-misty-blue hover:bg-misty-blue/90 text-white"
-            >
-              <EyeIcon className="h-5 w-5 mr-2" />
-              Preview Story
-            </Button>
-            <Button
               onClick={handlePublish}
-              disabled={isPublishDisabled}
+              disabled={isSaving || isPublishing}
               className="flex-1 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               <SendIcon className="h-5 w-5 mr-2" />

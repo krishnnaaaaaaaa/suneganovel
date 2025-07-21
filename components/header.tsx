@@ -38,9 +38,6 @@ export default function Header({ isAuthenticated, onLoginClick, onNavigate, curr
         </Button>
         {isAuthenticated && (
           <>
-            <Button variant="link" onClick={() => onNavigate("write")} className={navLinkClass("write")}>
-              Write
-            </Button>
             <Button variant="link" onClick={() => onNavigate("library")} className={navLinkClass("library")}>
               Library
             </Button>
@@ -50,9 +47,6 @@ export default function Header({ isAuthenticated, onLoginClick, onNavigate, curr
               className={navLinkClass("notifications")}
             >
               Notifications
-            </Button>
-            <Button variant="link" onClick={() => onNavigate("profile")} className={navLinkClass("profile")}>
-              Profile
             </Button>
           </>
         )}

@@ -1,6 +1,6 @@
 "use client"
 
-import { HomeIcon, SearchIcon, BellIcon, UserIcon, PlusIcon } from "lucide-react"
+import { HomeIcon, SearchIcon, BellIcon, UserIcon } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 // Removed useTheme import
@@ -27,9 +27,7 @@ export default function MobileNav({ onNavigate, currentPage }: MobileNavProps) {
 
   const getIconClass = (page: string) => `${currentPage === page ? "text-primary" : "text-muted-foreground"}`
 
-  // Hardcoded FAB colors to light theme
-  const fabBgColor = "bg-blush-pink"
-  const fabHoverColor = "hover:bg-blush-pink/90"
+
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-lg z-50 md:hidden">
@@ -54,17 +52,16 @@ export default function MobileNav({ onNavigate, currentPage }: MobileNavProps) {
             <span className={getIconClass("discover")}>Discover</span>
           </Link>
         </motion.div>
-        <div className="relative -top-6">
-          <motion.div whileTap={{ scale: 0.95 }}>
-            <Button
-              className={`w-14 h-14 rounded-full ${fabBgColor} text-white shadow-lg flex items-center justify-center ${fabHoverColor}`}
-              aria-label="Create New Story"
-              onClick={() => onNavigate("write")}
-            >
-              <PlusIcon className="w-8 h-8" />
-            </Button>
-          </motion.div>
-        </div>
+        <motion.div whileTap={{ scale: 0.9 }}>
+          <Link
+            href="#"
+            onClick={() => onNavigate("admin")}
+            className="flex flex-col items-center gap-1 text-xs font-medium"
+          >
+            <UserIcon className={`w-6 h-6 ${getIconClass("admin")}`} />
+            <span className={getIconClass("admin")}>Admin</span>
+          </Link>
+        </motion.div>
         <motion.div whileTap={{ scale: 0.9 }}>
           <Link
             href="#"
