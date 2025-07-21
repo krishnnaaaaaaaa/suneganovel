@@ -52,17 +52,7 @@ export default function MobileNav({ onNavigate, currentPage }: MobileNavProps) {
             <span className={getIconClass("discover")}>Discover</span>
           </Link>
         </motion.div>
-        <motion.div whileTap={{ scale: 0.9 }}>
-          <Link
-            href="#"
-            onClick={() => onNavigate("admin")}
-            className="flex flex-col items-center gap-1 text-xs font-medium"
-          >
-            <UserIcon className={`w-6 h-6 ${getIconClass("admin")}`} />
-            <span className={getIconClass("admin")}>Admin</span>
-          </Link>
-        </motion.div>
-        <motion.div whileTap={{ scale: 0.9 }}>
+<motion.div whileTap={{ scale: 0.9 }}>
           <Link
             href="#"
             onClick={() => onNavigate("notifications")}
