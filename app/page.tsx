@@ -184,19 +184,12 @@ He returned to his home, no longer a restless youth, but a wise storyteller, sha
                   Sunega Novel is a next-generation storytelling and reading platform, thoughtfully crafted to be a
                   cleaner, more immersive, and more creator-focused alternative.
                 </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <div className="flex justify-center">
                   <Button
                     onClick={() => handleNavigate("discover")}
                     className="rounded-full px-8 py-3 text-lg bg-white text-primary hover:bg-gray-100 transition-all shadow-md"
                   >
                     Start Reading
-                  </Button>
-                  <Button
-                    onClick={() => handleNavigate("write")}
-                    variant="outline"
-                    className="rounded-full px-8 py-3 text-lg border-2 border-white hover:bg-white/20 transition-all shadow-md text-pink-400"
-                  >
-                    Start Writing
                   </Button>
                 </div>
               </div>
