@@ -156,8 +156,8 @@ He returned to his home, no longer a restless youth, but a wise storyteller, sha
   }
 
   const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
+    type: "tween" as const,
+    ease: "anticipate" as const,
     duration: 0.4,
   }
 
@@ -282,7 +282,7 @@ He returned to his home, no longer a restless youth, but a wise storyteller, sha
       case "reader":
         return <StoryReader story={stories[0]} /> // Display the first story as an example
       case "write":
-        return <StoryEditor />
+        return <StoryEditor onClose={() => setCurrentPage({ name: "home" })} />
       case "profile":
         return <UserProfile />
       case "library":
